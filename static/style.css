@@ -1,0 +1,57 @@
+/* General page style */
+body {
+    font-family: "Trebuchet MS", Arial, sans-serif;
+    background-color: #0d0d0d; /* near black */
+    color: #e0e0e0; /* light gray text */
+    margin: 0;
+    padding: 0;
+}
+
+/* Page title */
+h1 {
+    text-align: center;
+    background: linear-gradient(90deg, #0f2027, #203a43, #2c5364); /* cosmic gradient */
+    color: #00ffcc; /* neon green-blue */
+    padding: 20px 0;
+    margin: 0;
+    text-shadow: 0 0 2px #00ffcc, 0 0 5px #00ffcc;
+}
+
+/* Blog posts container */
+.posts {
+    width: 80%;
+    max-width: 800px;
+    margin: 30px auto;
+}
+
+/* Individual post */
+.post {
+    background: #1a1a1a;
+    padding: 20px;
+    margin-bottom: 25px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 255, 204, 0.2);
+    transition: transform 0.2s ease;
+}
+
+.post:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 15px rgba(0, 255, 204, 0.4);
+}
+
+/* Post title */
+.post h2 {
+    margin-top: 0;
+    color: #00ffcc;
+    text-shadow: 0 0 5px #00ffcc;
+}
+
+/* Author */
+.post p strong {
+    color: #b3b3b3;
+}
+
+/* Post footer (id) */
+.post small {
+    color: #888;
+}
