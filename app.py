@@ -8,7 +8,11 @@ app = Flask(__name__)
 def index():
     """Opens and loads the blogs.json file. Then
      passes blog_posts into the template as 'posts'
-     using the render_template function."""
+     using the render_template function. os.path.exists was
+     used to prevent crashing if json file does not exist
+     in default path; in that case an empty list is created.
+     the function returns the render of homepage index.html"""
+
     if os.path.exists("blogs.json"):
         with open("blogs.json", "r") as f:
             blog_posts = json.load(f)
@@ -22,9 +26,11 @@ def index():
 def add():
     """If request-method is 'POST', gets data from form,
       loads the existing posts, assigns a unique new id for the post
-       and then creates the new_post. Finally the new_post is
-       dumped into the json file. The return is the redirect to
-       homepage (/index)"""
+       and then creates the new_post. Finally, the new_post is
+       dumped into the json file. The function return is the
+       redirect to the homepage (/) unless the method is GET, in
+       which case the redirect is to the add (/add) page"""
+
     if request.method == 'POST':
         title = request.form.get("title")
         author = request.form.get("author")
@@ -59,35 +65,24 @@ def add():
     return render_template("add.html")
 
 
+@app.route('/delete/<int:post_id>', methods=['POST','GET'])
+def delete(post_id):
+    """Deletes the blog post with the given post_id."""
+    if os.path.exists("blogs.json"):
+        with open("blogs.json", "r") as f:
+            blog_posts = json.load(f)
+    else:
+        blog_posts = []
+
+    # Filter out the post to delete
+    blog_posts = [post for post in blog_posts if post["id"] != post_id]
+
+    # Save updated list back to file
+    with open("blogs.json", "w") as f:
+        json.dump(blog_posts, f, indent=4)
+
+    return redirect(url_for("index"))
+
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=8080, debug=True)
 
-
-
-# from flask import Flask, render_template
-# import json
-#
-# app = Flask(__name__)
-#
-# @app.route('/')
-# def index():
-#     """Opens and loads the blogs.json file. Then
-#     passes blog_posts into the template as 'posts'
-#     using the render_template function."""
-#     with open("blogs.json", "r") as f:
-#         blog_posts = json.load(f)
-#
-#     return render_template("index.html", posts=blog_posts)
-#
-#
-# from flask import request, render_template
-#
-# @app.route('/add', methods=['GET', 'POST'])
-# def add():
-#     if request.method == 'POST':
-#         # Fill this
-#         pass
-#     return render_template('add.html')
-#
-# if __name__ == '__main__':
-#     app.run(host="0.0.0.0", port=8080, debug=True)

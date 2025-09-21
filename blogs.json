@@ -1,20 +1,14 @@
 [
     {
-        "id": 1,
-        "author": "Fernando Curiel",
+        "id": 5,
+        "title": "Why is the sky dark at night?",
+        "author": "Fernando",
+        "content": "If the Universe were infinite, the sky would be anything but dark at night"
+    },
+    {
+        "id": 6,
         "title": "Are we alone in the Universe?",
-        "content": "The possibility of intelligence in the universe is...."
-    },
-    {
-        "id": 2,
-        "author": "Fernando Curiel",
-        "title": "Where is everybody?",
-        "content": "Fermat paradox..."
-    },
-    {
-        "id": 3,
-        "title": "Why is the sky black at night?",
-        "author": "Luc\u00eda",
-        "content": "Olbers paradox is..."
+        "author": "Fernando",
+        "content": "Fermi's paradox..."
     }
 ]
