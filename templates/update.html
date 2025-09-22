@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>️ Update Blog Post</h1>
+    <h1>️ Update Blog Post</h1>  <!-- Could not make the action/pre-filled work -->
     <form method="POST">
         <label for="title">Title:</label><br>
         <input type="text" id="title" name="title" value="{{ post.title }}" required><br><br>

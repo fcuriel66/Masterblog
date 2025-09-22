@@ -116,14 +116,12 @@ def update(post_id):
 
     if request.method == 'POST':
         # Updates post with new values
-        post["title"] = request.form.get("title")
-        post["author"] = request.form.get("author")
-        post["content"] = request.form.get("content")
-        print(post)
-        print(blog_posts)
-        # for post in blog_posts:
-        #     if post["id"] == post_id:
-        #         return post
+        for bpost in blog_posts:
+            if bpost["id"] == post_id:
+                bpost["title"] = request.form.get("title")
+                bpost["author"] = request.form.get("author")
+                bpost["content"] = request.form.get("content")
+
         # Saves updated blog to file (check proper update of bog_posts to be saved)
         with open("blogs.json", "w") as f:
             json.dump(blog_posts, f, indent=4)
