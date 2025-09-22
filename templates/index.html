@@ -22,6 +22,14 @@
                 <p>{{ post.content }}</p>
                 <small><em>Post ID: {{ post.id }}</em></small>
 
+                <!-- Likes display -->
+                <p>Likes: {{ post.likes if post.likes is defined else 0 }}</p>
+
+                <!-- Like button -->
+                <form action="{{ url_for('like', post_id=post.id) }}" method="POST" style="display:inline;">
+                    <button type="submit" class="like-btn">👍 Like</button>
+                </form>
+
                 <!-- Delete button -->
                 <form action="{{ url_for('delete', post_id=post.id) }}" method="POST" style="display:inline;">
                     <button type="submit" class="delete-btn">❌ Delete</button>

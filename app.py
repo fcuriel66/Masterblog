@@ -119,7 +119,7 @@ def update(post_id):
                 bpost["author"] = request.form.get("author")
                 bpost["content"] = request.form.get("content")
 
-        # Saves updated blog to file (check proper update of bog_posts to be saved)
+        # Saves updated blog to file
         with open("blogs.json", "w") as f:
             json.dump(blog_posts, f, indent=4)
 
@@ -128,6 +128,28 @@ def update(post_id):
     # If it is a GET request -> render form update.html
     return render_template("update.html", post=post)
 
+
+@app.route('/like/<int:post_id>', methods=['POST'])
+def like(post_id):
+    with open("blogs.json", "r") as f:
+        blog_posts = json.load(f)
+
+    # find the post
+    for post in blog_posts:
+        if post["id"] == post_id:
+            # ensure likes field
+            if "likes" not in post:
+                post["likes"] = 0
+            post["likes"] += 1
+            break
+    else:
+        # post not found
+        return "Post not found", 404
+
+    #save_posts(posts)
+    with open("blogs.json", "w") as f:
+        json.dump(blog_posts, f, indent=4)
+    return redirect(url_for("index"))
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=8080, debug=True)
