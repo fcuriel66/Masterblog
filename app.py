@@ -103,11 +103,8 @@ def delete(post_id):
 def update(post_id):
     """ Update route to display the update form"""
     # Load all posts
-    # if os.path.exists("blogs.json"):
     with open("blogs.json", "r") as f:
         blog_posts = json.load(f)
-    # else:
-    #     blog_posts = []
 
     # Uses the fetch_post_by_id function above
     post = fetch_post_by_id(post_id)
