@@ -4,9 +4,24 @@ import os
 
 app = Flask(__name__)
 
+def fetch_post_by_id(post_id):
+    """ The function fetches a post by its id (after checking
+        if blog with files exists)"""
+    if os.path.exists("blogs.json"):
+        with open("blogs.json", "r") as f:
+            blog_posts = json.load(f)
+    else:
+        blog_posts = []
+
+    for post in blog_posts:
+        if post["id"] == post_id:
+            return post
+    return None
+
+
 @app.route('/')
 def index():
-    """Opens and loads the blogs.json file. Then
+    """ Opens and loads the blogs.json file. Then
      passes blog_posts into the template as 'posts'
      using the render_template function. os.path.exists was
      used to prevent crashing if json file does not exist
@@ -24,7 +39,7 @@ def index():
 
 @app.route('/add', methods=['GET', 'POST'])
 def add():
-    """If request-method is 'POST', gets data from form,
+    """ If request-method is 'POST', gets data from form,
       loads the existing posts, assigns a unique new id for the post
        and then creates the new_post. Finally, the new_post is
        dumped into the json file. The function return is the
@@ -82,6 +97,42 @@ def delete(post_id):
         json.dump(blog_posts, f, indent=4)
 
     return redirect(url_for("index"))
+
+
+@app.route('/update/<int:post_id>', methods=['GET', 'POST'])
+def update(post_id):
+    """ Update route to display the update form"""
+    # Load all posts
+    # if os.path.exists("blogs.json"):
+    with open("blogs.json", "r") as f:
+        blog_posts = json.load(f)
+    # else:
+    #     blog_posts = []
+
+    # Uses the fetch_post_by_id function above
+    post = fetch_post_by_id(post_id)
+    if post is None:
+        return "Post not found", 404
+
+    if request.method == 'POST':
+        # Updates post with new values
+        post["title"] = request.form.get("title")
+        post["author"] = request.form.get("author")
+        post["content"] = request.form.get("content")
+        print(post)
+        print(blog_posts)
+        # for post in blog_posts:
+        #     if post["id"] == post_id:
+        #         return post
+        # Saves updated blog to file (check proper update of bog_posts to be saved)
+        with open("blogs.json", "w") as f:
+            json.dump(blog_posts, f, indent=4)
+
+        return redirect(url_for("index"))
+
+    # If it is a GET request -> render form update.html
+    return render_template("update.html", post=post)
+
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=8080, debug=True)
