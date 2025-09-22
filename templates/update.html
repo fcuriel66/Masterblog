@@ -15,7 +15,7 @@
         <input type="text" id="author" name="author" value="{{ post.author }}" required><br><br>
 
         <label for="content">Content:</label><br>
-        <textarea id="content" name="content" rows="5" cols="40" required>{{ post.content }}</textarea><br><br>
+        <textarea id="content" name="content" rows="15" cols="100" required>{{ post.content }}</textarea><br><br>
 
         <button type="submit">💾 Save Changes</button>
         <a href="{{ url_for('index') }}">Cancel</a>
